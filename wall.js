@@ -53,7 +53,6 @@ import {
   check2.addEventListener('change', updateOtherTextDisplay);
   check3.addEventListener('change', updateOtherTextDisplay);
 
-  // Optional: ensure correct visibility on page load
   updateOtherTextDisplay();
 }
 
@@ -107,7 +106,7 @@ import {
         step2.style.display = 'none';
       });
 
-    // 🧠 Hide email step if already saved
+    // Hide email step if already saved
     if (localStorage.getItem('user_email')) {
       step2.style.display = 'none';
       form.requestSubmit(); // triggers form submission directly

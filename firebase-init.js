@@ -1,4 +1,4 @@
-console.log("✅ Firebase Init Loaded");
+console.log("Firebase Init Loaded");
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
@@ -17,7 +17,7 @@ export const db = getFirestore(app);
 
 // Optional: only import wall.js on non-admin pages
 if (!window.location.pathname.includes("admin")) {
-  import('./wall.js').then(module => {
+  import('wall.js').then(module => {
     module.initSurveyApp(db); // pass db only if needed
   });
 }
