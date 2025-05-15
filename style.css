@@ -127,7 +127,8 @@ a {
 
 #cookie-banner {
   z-index: 9999; 
-  max-width: 400px; 
+  width : 400px;
+  max-width: 80%; 
   display: none;
   background : var(--munken);
   margin : 1rem;
@@ -360,6 +361,11 @@ textarea {
 }
 
 @media (max-width: 576px) {
+
+  #cookie-banner {
+   width : 80%;
+   left : 46% !important;
+}
 
   .note {
     width : 10vh;
