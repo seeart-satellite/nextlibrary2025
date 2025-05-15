@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <script type="module" src="./firebase-init.js"></script>
+  <script type="module" src="./auth.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/512446d95e.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="site-container">
+  
+    <nav class="navbar justify-content-center">
+      <div class="container-fluid">
+      <a class="navbar-brand" href="index.html"><strong>Next Library 2026</strong></a>
+
+      <ul class="navbar-nav flex-row">
+        <li class="nav-item mx-3">
+        <a class="nav-link" href="/index.html"><strong>Home</strong></a>
+        </li>
+        <li class="nav-item mx-3">
+        <a class="nav-link active" aria-current="page" href="/results.html"><strong>Board</strong></a>
+        </li>
+      </ul>
+      </div>
+    </nav>
+
+    <div class="text-center m-3">
+  
+      <div>
+      <h1>Admin Login</h1>
+    <button class="btn btn-primary" type="button" id="loginBtn">Sign in with Google</button>
+      </div>
+      </div>
+
+      <div class="container footer">
+
+    <nav class="navbar">
+      <div class="container-fluid justify-content-center">
+      <ul class="navbar-nav flex-row">
+        <li class="nav-item mx-3">
+          <a class="nav-link" href="" data-bs-toggle="modal" data-bs-target="#privacyModal"><strong>Privacy Notice & Consent</strong></a>
+        </li>
+
+          <!-- Privacy Policy Modal -->
+          <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Privacy Notice & Consent</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span>
+                      <p><em>SeeArt Foundation</em>, the organizer of <em>Next Library 2026 Satellite in Seoul</em>, will collect and use your personal information(E-mail, Purpose of Visit) <strong>only</strong> for the following purposes:</p>
+                    </span>
+                    <span>
+                    <ul class="pb-3">
+                      <li class="list-group-item">- To contact you if follow-up is needed</li>
+                      <li class="list-group-item">- To help us plan a better, more inclusive event</li>
+                    </ul>
+                    </span>
+
+                    <span>
+                    <p>Your information will <strong>not</strong> be shared with any third parties.</p>
+                    </span>
+                    <span>
+                    <p>You may request to access or delete your data at any time by contacting <i class="fa-solid fa-envelope-open-text"></i> <a href="mailto:contact@see-art.org">contact@see-art.org</a></p>
+                    </span>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Understood</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        
+        <li class="nav-item mx-3">
+          <a class="nav-link" href="http://see-art.org/" target="_blank"><strong>See Art Foundation</strong></a>
+        </li>
+      </ul>
+      </div>
+    </nav>
+
+  </div>
+
+  </div>
+
+
+  
+</body>
+</html>
