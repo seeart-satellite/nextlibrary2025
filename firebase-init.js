@@ -15,9 +15,8 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-// Optional: only import wall.js on non-admin pages
 if (!window.location.pathname.includes("admin")) {
-  import('wall.js').then(module => {
-    module.initSurveyApp(db); // pass db only if needed
+  import('./wall.js').then(module => {
+    module.initSurveyApp(db);
   });
 }
