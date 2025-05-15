@@ -1,7 +1,9 @@
 import {
     collection,
     addDoc,
-    onSnapshot
+    onSnapshot,
+    updateDoc, 
+    doc 
   } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
   
   export function initSurveyApp(db) {
@@ -227,6 +229,7 @@ if (wall) {
         note.textContent = data.text;
         note.style.left = `${data.x}%`;
         note.style.top = `${data.y}%`;
+        note.dataset.id = doc.id; 
         makeDraggable(note);
         wall.appendChild(note);
       }
@@ -245,43 +248,63 @@ if (wall) {
     }
   
     function makeDraggable(el) {
-      let offsetX, offsetY, isDragging = false;
-  
-      el.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        offsetX = e.clientX - el.offsetLeft;
-        offsetY = e.clientY - el.offsetTop;
-        el.style.zIndex = ++zIndexCounter;
-      });
-  
-      document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        const newX = e.clientX - offsetX;
-        const newY = e.clientY - offsetY;
-        el.style.left = `${(newX / wall.clientWidth) * 100}%`;
-        el.style.top = `${(newY / wall.clientHeight) * 100}%`;
-      });
-  
-      document.addEventListener('mouseup', () => isDragging = false);
-  
-      el.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        const touch = e.touches[0];
-        offsetX = touch.clientX - el.offsetLeft;
-        offsetY = touch.clientY - el.offsetTop;
-        el.style.zIndex = ++zIndexCounter;
-      });
-  
-      document.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        const touch = e.touches[0];
-        const newX = touch.clientX - offsetX;
-        const newY = touch.clientY - offsetY;
-        el.style.left = `${(newX / wall.clientWidth) * 100}%`;
-        el.style.top = `${(newY / wall.clientHeight) * 100}%`;
-      }, { passive: false });
-  
-      document.addEventListener('touchend', () => isDragging = false);
-    }
+  let offsetX, offsetY, isDragging = false;
+
+  const savePosition = () => {
+    const id = el.dataset.id;
+    if (!id) return;
+
+    const x = parseFloat(el.style.left); // In %
+    const y = parseFloat(el.style.top);
+
+    updateDoc(doc(notesRef, id), { x, y })
+      .then(() => console.log(`🧷 Saved position for ${id}: ${x}%, ${y}%`))
+      .catch(err => console.error("Failed to update position:", err));
+  };
+
+  el.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    offsetX = e.clientX - el.offsetLeft;
+    offsetY = e.clientY - el.offsetTop;
+    el.style.zIndex = ++zIndexCounter;
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const newX = e.clientX - offsetX;
+    const newY = e.clientY - offsetY;
+    el.style.left = `${(newX / wall.clientWidth) * 100}%`;
+    el.style.top = `${(newY / wall.clientHeight) * 100}%`;
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (isDragging) savePosition();
+    isDragging = false;
+  });
+
+  // Touch events
+  el.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    const touch = e.touches[0];
+    offsetX = touch.clientX - el.offsetLeft;
+    offsetY = touch.clientY - el.offsetTop;
+    el.style.zIndex = ++zIndexCounter;
+  });
+
+  document.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    const touch = e.touches[0];
+    const newX = touch.clientX - offsetX;
+    const newY = touch.clientY - offsetY;
+    el.style.left = `${(newX / wall.clientWidth) * 100}%`;
+    el.style.top = `${(newY / wall.clientHeight) * 100}%`;
+  }, { passive: false });
+
+  document.addEventListener('touchend', () => {
+    if (isDragging) savePosition();
+    isDragging = false;
+  });
+}
+
   }
   
