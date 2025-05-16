@@ -5,20 +5,19 @@ import { app } from "./firebase-init.js";
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// Only allow access if user is signed in
-onAuthStateChanged(auth, async user => {
+onAuthStateChanged(auth, async (user) => {
   if (!user) {
     window.location.href = "admin.html";
     return;
   }
 
+  // Fetch and populate messages
   const messagesRef = collection(db, "messages");
   const snapshot = await getDocs(messagesRef);
-  const table = document.getElementById("messageTable");
+  const messageTable = document.getElementById("messageTable");
 
-  snapshot.forEach(docSnap => {
+  snapshot.forEach((docSnap) => {
     const data = docSnap.data();
-
     const row = document.createElement("tr");
 
     const textCell = document.createElement("td");
@@ -38,25 +37,72 @@ onAuthStateChanged(auth, async user => {
 
     visibleCell.appendChild(checkbox);
     row.appendChild(visibleCell);
-
-    table.appendChild(row);
+    messageTable.appendChild(row);
   });
-});
 
-// Logout button handler
-document.addEventListener("DOMContentLoaded", () => {
+  // Fetch and populate emails
+  const emailsRef = collection(db, "emails");
+  const emailSnap = await getDocs(emailsRef);
+  const emailTable = document.getElementById("emailTable");
+
+  emailSnap.forEach((docSnap) => {
+    const data = docSnap.data();
+    const row = document.createElement("tr");
+
+    const fields = [
+      data.email,
+      data.section,
+      data.wantsUpdates,
+      data.isNextLibrary,
+      data.isDokk1Visitor,
+      data.isOther,
+      data.otherText,
+      data.timestamp?.toDate().toLocaleString() || ""
+    ];
+
+    fields.forEach((value) => {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.appendChild(cell);
+    });
+
+    emailTable.appendChild(row);
+  });
+
+  // Attach logout handler
   const logoutLink = document.getElementById("logout");
   if (logoutLink) {
-    logoutLink.addEventListener("click", (e) => {
+    logoutLink.addEventListener("click", async (e) => {
       e.preventDefault();
-      signOut(auth)
-        .then(() => {
-          console.log("User signed out");
-          window.location.href = "admin.html"; // redirect after logout
-        })
-        .catch((error) => {
-          console.error("Logout error:", error);
-        });
+      try {
+        await signOut(auth);
+        console.log("User signed out");
+        window.location.href = "admin.html";
+      } catch (error) {
+        console.error("Logout error:", error);
+      }
     });
   }
 });
+
+// CSV export function must be globally accessible
+window.exportEmailCSV = function () {
+  const table = document.getElementById("emailTable");
+  let csv = [];
+
+  for (let row of table.rows) {
+    let cols = Array.from(row.cells).map((cell) => `"${cell.innerText}"`);
+    csv.push(cols.join(","));
+  }
+
+  const csvContent = csv.join("\n");
+  const blob = new Blob([csvContent], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "email-data.csv";
+  link.click();
+
+  URL.revokeObjectURL(url);
+};

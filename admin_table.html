@@ -2,56 +2,79 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Message Table</title>
-  <script type="module" src="admin_table.js"></script>
-
+  <title>Admin Console</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
   <script src="https://kit.fontawesome.com/512446d95e.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="style.css">
-
-  
 </head>
 <body>
 
   <div class="site-container">
 
-     <nav class="navbar justify-content-center">
+    <nav class="navbar justify-content-center">
       <div class="container-fluid">
-      <a class="navbar-brand" href="index.html"><strong>Next Library 2026</strong></a>
-
-      <ul class="navbar-nav flex-row">
-  <li class="nav-item mx-3">
-    <a class="nav-link" href="index.html"><strong>Home</strong></a>
-  </li>
-  <li class="nav-item mx-3">
-    <a class="nav-link active" aria-current="page" href="results.html"><strong>Board</strong></a>
-  </li>
-  <li class="nav-item mx-3">
-    <a class="nav-link" href="#" id="logout"><strong>Logout</strong></a>
-  </li>
-</ul>
+        <a class="navbar-brand" href="index.html"><strong>Next Library 2026</strong></a>
+        <ul class="navbar-nav flex-row">
+          <li class="nav-item mx-3"><a class="nav-link" href="index.html"><strong>Home</strong></a></li>
+          <li class="nav-item mx-3"><a class="nav-link" href="results.html"><strong>Board</strong></a></li>
+          <li class="nav-item mx-3"><a class="nav-link" href="#" id="logout"><strong>Logout</strong></a></li>
+        </ul>
       </div>
     </nav>
 
-    <div class="text-center justify-content-center d-grid">
+    <div class="text-center mt-4">
+      <button onclick="showTab('messagesTab')" class="btn btn-primary m-2">Messages</button>
+      <button onclick="showTab('emailsTab')" class="btn btn-primary m-2">Email Preferences</button>
+    </div>
 
-  <h1>Message List</h1>
-  <table class="message-table table table-hover">
-    <thead>
-      <tr>
-        <th scope="col"><h5>Message</h5></th>
-        <th scope="col"><h5>Visible</h5></th>
-      </tr>
-    </thead>
-    <tbody id="messageTable"></tbody>
-  </table>
+    <div class="container mt-4">
+      <div id="messagesTab">
+        <h1>Message List</h1>
+        <table class="table table-hover message-table" id="messageTable">
+          <thead>
+            <tr>
+              <th>Message</th>
+              <th>Visible</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
 
+      <div id="emailsTab" style="display:none;">
+        <h1>Email Preferences</h1>
+        <button class="btn btn-success mb-3" onclick="exportEmailCSV()">Export Emails as CSV</button>
+        <table id="emailTable" class="table table-hover message-table">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Section</th>
+              <th>Wants Updates</th>
+              <th>Next Library</th>
+              <th>Dokk1 Visitor</th>
+              <th>Other</th>
+              <th>Other Text</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
+  <script type="module" src="./admin_table.js"></script>
+  <script>
+    function showTab(tabId) {
+      document.getElementById("messagesTab").style.display = "none";
+      document.getElementById("emailsTab").style.display = "none";
+      document.getElementById(tabId).style.display = "block";
+    }
+  </script>
 </body>
 </html>
