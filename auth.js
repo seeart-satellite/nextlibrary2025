@@ -1,5 +1,5 @@
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-import { app } from "./firebase-init.js"; 
+import { app } from "./firebase-init.js";
 
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
@@ -16,7 +16,7 @@ if (loginBtn) {
   });
 }
 
-
+// Optional auto-redirect if already logged in
 onAuthStateChanged(auth, user => {
   if (user && window.location.pathname.endsWith("admin.html")) {
     window.location.href = "admin_table.html";

@@ -119,6 +119,7 @@ a {
   box-sizing: border-box;
 }
 
+
 .message-table {
   --bs-table-bg : transparent;
   --bs-table-border-color : var(--gray);
@@ -127,8 +128,7 @@ a {
 
 #cookie-banner {
   z-index: 9999; 
-  width : 400px;
-  max-width: 80%; 
+  max-width: 400px; 
   display: none;
   background : var(--munken);
   margin : 1rem;
@@ -246,8 +246,16 @@ button {
   color : var(--skyblue);
 }
 
+.section_h {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
 
-
+.section_h.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 form {
   display: flex;
@@ -362,10 +370,9 @@ textarea {
 
 @media (max-width: 576px) {
 
-  #cookie-banner {
-   width : 80%;
-   left : 46% !important;
-}
+  .site-container {
+    padding : 0;
+  }
 
   .note {
     width : 10vh;
@@ -379,6 +386,10 @@ textarea {
     text-align : center;
   }
 
+  .container_step2 {
+    margin-top : -3rem;
+  }
+
   #header1 {
     margin-top : 0rem;
   }
@@ -390,6 +401,18 @@ textarea {
   .maindesc {
     font-size : 1rem;
     padding-top : 1rem;
+  }
+
+  textarea {
+    margin-top : -3rem !important;
+  }
+
+  .step2_question {
+    text-align : left;
+  }
+
+  .form-check {
+    padding-left : 0.7rem;
   }
 
   #wall {

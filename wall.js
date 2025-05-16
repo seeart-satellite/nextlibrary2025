@@ -47,7 +47,7 @@ import {
     otherText.style.display = 'block';
   } else {
     otherText.style.display = 'none';
-    otherText.value = ''; // Clear the input when not shown
+    otherText.value = '';
   }
 };
 
@@ -66,7 +66,7 @@ import {
   // Disable button if already submitted
   if (answeredSections.includes(section)) {
     btn.disabled = true;
-    btn.classList.add('btn-secondary');
+    btn.classList.add('btn-light');
     btn.innerText += 'Done';
     return;
   }
@@ -82,10 +82,36 @@ import {
     sectionC.style.display = 'none';
     sectionD.style.display = 'none';
 
-    if (selectedSection == "Section A") sectionA.style.display = 'block';
-    if (selectedSection == "Section B") sectionB.style.display = 'block';
-    if (selectedSection == "Section C") sectionC.style.display = 'block';
-    if (selectedSection == "Section D") sectionD.style.display = 'block';
+  let targetSection;
+  if (selectedSection == "Section A") targetSection = sectionA;
+  if (selectedSection == "Section B") targetSection = sectionB;
+  if (selectedSection == "Section C") targetSection = sectionC;
+  if (selectedSection == "Section D") targetSection = sectionD;
+
+  if (targetSection) {
+    targetSection.style.display = 'block';
+
+    // Animate .section_h elements inside
+    const elements = targetSection.querySelectorAll('.section_h');
+    elements.forEach((el, index) => {
+      el.classList.remove('animate-in'); // Reset if reused
+      setTimeout(() => {
+        el.classList.add('animate-in');
+      }, index * 150);
+    });
+
+    // Focus the h1 inside
+    const h1 = targetSection.querySelector('h1');
+    if (h1) {
+      // Scroll into view first
+      h1.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Wait a little before focusing
+      setTimeout(() => {
+        h1.focus(); // Add tabindex="-1" to your h1 for this to work
+      }, elements.length * 150 + 100); // After animation finishes
+    }
+  }
 
   });
 });
@@ -112,6 +138,27 @@ import {
     if (localStorage.getItem('user_email')) {
       step2.style.display = 'none';
       form.requestSubmit(); // triggers form submission directly
+    }
+
+    // Animate .section_h elements inside
+    const elements = step2.querySelectorAll('.section_h');
+    elements.forEach((el, index) => {
+      el.classList.remove('animate-in'); // Reset if reused
+      setTimeout(() => {
+        el.classList.add('animate-in');
+      }, index * 150);
+    });
+
+    // Focus the h1 inside
+    const h1 = step2.querySelector('h1');
+    if (h1) {
+      // Scroll into view first
+      h1.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Wait a little before focusing
+      setTimeout(() => {
+        h1.focus(); // Add tabindex="-1" to your h1 for this to work
+      }, elements.length * 150 + 100); // After animation finishes
     }
   });
 }
@@ -142,7 +189,8 @@ import {
         section: selectedSection,
         x: Math.random() * 80,
         y: Math.random() * 80,
-        visible: true 
+        visible: true,
+        timestamp: new Date() 
       });
 
       // Save email in separate collection
@@ -220,7 +268,7 @@ if (wall) {
     wall.innerHTML = '';
     snapshot.forEach(doc => {
       const data = doc.data();
-      console.log("Loaded note:", data); // 👈 Check what's coming in
+      console.log("Loaded note:", data); 
 
       // Only show if visible is true
       if (data.visible === true) {

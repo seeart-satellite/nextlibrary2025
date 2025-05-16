@@ -2,8 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Console</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <title>Admin Console | Voices for the Next Library 2025</title>
+
+  <meta name="title" content="Voices for the Next Library 2025">
+  <meta name="description" content="Be among the first to explore the tracks for Next Library 2025 and help shape the conversation.">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://seeart-satellite.github.io/nextlibrary2025">
+  <meta property="og:title" content="Voices for the Next Library 2025">
+  <meta property="og:description" content="Be among the first to explore the tracks for Next Library 2025 and help shape the conversation.">
+  <meta property="og:image" content="og_fb.png">
+
+  <!-- favicon -->
+  <link rel="icon" type="image/png" href="favicon.ico">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +32,7 @@
 
     <nav class="navbar justify-content-center">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.html"><strong>Next Library 2026</strong></a>
+        <a class="navbar-brand" href="index.html"><strong>Next Library 2025</strong></a>
         <ul class="navbar-nav flex-row">
           <li class="nav-item mx-3"><a class="nav-link" href="index.html"><strong>Home</strong></a></li>
           <li class="nav-item mx-3"><a class="nav-link" href="results.html"><strong>Board</strong></a></li>
@@ -35,11 +49,15 @@
     <div class="container mt-4">
       <div id="messagesTab">
         <h1>Message List</h1>
+        <button class="btn btn-success mb-3" onclick="exportMessageCSV()">Export Messages as CSV</button>
         <table class="table table-hover message-table" id="messageTable">
+
           <thead>
             <tr>
               <th>Message</th>
               <th>Visible</th>
+              <th>Section</th>
+              <th>Timestamp</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -49,7 +67,7 @@
       <div id="emailsTab" style="display:none;">
         <h1>Email Preferences</h1>
         <button class="btn btn-success mb-3" onclick="exportEmailCSV()">Export Emails as CSV</button>
-        <table id="emailTable" class="table table-hover message-table">
+        <table class="table table-hover message-table" id="emailTable">
           <thead>
             <tr>
               <th>Email</th>
