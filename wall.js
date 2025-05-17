@@ -261,29 +261,93 @@ if (restartBtn) {
 }
 
 
-
   
+const existingNoteIds = new Set();
+let hasLoadedInitially = false;
+const noteMap = new Map(); // To track DOM elements by doc.id
+
 if (wall) {
   onSnapshot(notesRef, snapshot => {
-    wall.innerHTML = '';
-    snapshot.forEach(doc => {
-      const data = doc.data();
-      console.log("Loaded note:", data); 
+    const newNotes = [];
+    const currentIds = new Set();
 
-      // Only show if visible is true
+    snapshot.forEach((doc, index) => {
+      const data = doc.data();
+      const id = doc.id;
+      currentIds.add(id);
+
+      let note = noteMap.get(id);
+
       if (data.visible === true) {
-        const note = document.createElement('div');
-        note.className = `note ${getSectionClass(data.section)}`;
-        note.textContent = data.text;
-        note.style.left = `${data.x}%`;
-        note.style.top = `${data.y}%`;
-        note.dataset.id = doc.id; 
-        makeDraggable(note);
-        wall.appendChild(note);
+        const isNew = !existingNoteIds.has(id);
+        existingNoteIds.add(id);
+
+        // Create new note element if not exists
+        if (!note) {
+          note = document.createElement('div');
+          note.className = `note ${getSectionClass(data.section)}`;
+          note.textContent = data.text;
+          note.style.left = `${data.x}%`;
+          note.style.top = `${data.y}%`;
+          note.dataset.id = id;
+          makeDraggable(note);
+          wall.appendChild(note);
+          noteMap.set(id, note);
+        }
+
+        // Apply animations
+        if (!hasLoadedInitially) {
+          newNotes.push(note); // for staggered animation later
+        } else if (isNew) {
+          note.classList.add('note-new');
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+      note.classList.add('show');
+    }, 20); 
+          });
+        } else {
+          // Make sure note stays visible
+          note.classList.add('show');
+        }
+      } else {
+        // Fade out then remove
+        if (note) {
+          note.classList.remove('show');
+          note.classList.add('fade-out');
+          setTimeout(() => {
+            if (note.parentNode === wall) wall.removeChild(note);
+            noteMap.delete(id);
+            existingNoteIds.delete(id);
+          }, 600); // match fade-out duration
+        }
       }
     });
+
+    // Staggered fade-in after first full load
+    if (!hasLoadedInitially) {
+      newNotes.forEach((note, i) => {
+        setTimeout(() => {
+          note.classList.add('note-new', 'show');
+        }, i * 120);
+      });
+      hasLoadedInitially = true;
+    }
+
+    // Optional cleanup of deleted notes (not just visibility = false)
+    for (let id of [...noteMap.keys()]) {
+      if (!currentIds.has(id)) {
+        const oldNote = noteMap.get(id);
+        if (oldNote.parentNode === wall) wall.removeChild(oldNote);
+        noteMap.delete(id);
+        existingNoteIds.delete(id);
+      }
+    }
   });
 }
+
+
+
+
   
     function getSectionClass(section) {
       switch (section) {

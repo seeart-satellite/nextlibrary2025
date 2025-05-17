@@ -315,6 +315,7 @@ textarea {
   overflow: auto;
 }
 
+
 .note {
   position: absolute;
   width: 300px;
@@ -329,6 +330,34 @@ textarea {
   user-select: none;
   font-size : 1.7vh;
 }
+
+.note {
+  opacity: 0;
+  transition: opacity 0.6s ease-in;
+}
+
+.note.show {
+  opacity : 1;
+}
+
+.note.visible {
+  opacity: 1;
+}
+
+.note.fade-out {
+  opacity: 0 !important;
+}
+
+.note-new {
+  transform: translateY(10px);
+  transition: transform 2 ease, opacity 2 ease;
+}
+
+.note-new.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 
 .note.A { 
   background-color: var(--track1-bg); 
@@ -373,6 +402,11 @@ textarea {
   .site-container {
     padding : 0;
   }
+
+   #cookie-banner {
+   width : 80%;
+   left : 46% !important;
+}
 
   .note {
     width : 10vh;
@@ -424,6 +458,7 @@ textarea {
     position: static;
   }
 
+
   .note {
     position: relative;
     left: auto !important;
@@ -436,6 +471,8 @@ textarea {
     font-size: 1rem;
     padding: 1.2rem;
   }
+
+
 
   .float-leftright, .float-updown, .float-updown_2 {
       animation: none !important;
