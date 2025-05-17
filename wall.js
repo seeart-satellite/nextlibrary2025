@@ -220,7 +220,7 @@ import {
       if (btnToDisable) {
       btnToDisable.disabled = true;
       btnToDisable.classList.add('btn-light');
-      btnToDisable.innerText += 'Done';
+      btnToDisable.innerHTML = 'Done'; // Clears icon and sets plain text
       }
 
 
