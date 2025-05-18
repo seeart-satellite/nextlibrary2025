@@ -333,7 +333,7 @@ if (wall) {
       hasLoadedInitially = true;
     }
 
-    // Optional cleanup of deleted notes (not just visibility = false)
+    // Optional cleanup of deleted notes
     for (let id of [...noteMap.keys()]) {
       if (!currentIds.has(id)) {
         const oldNote = noteMap.get(id);

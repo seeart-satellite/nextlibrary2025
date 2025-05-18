@@ -1,3 +1,5 @@
+/* For card fade-in transition */
+
 window.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.card');
     cards.forEach((card, index) => {
