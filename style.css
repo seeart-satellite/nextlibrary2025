@@ -1,3 +1,24 @@
+/* 
+
+CSS Index
+1.Root Variables
+2.Typography
+3.Base Layout
+4.Buttons
+5.Navbar
+6.Card Styles
+7.Sections & Backgrounds
+8.Forms
+9.Modals & Popups
+10.Tables
+11.Animations
+12.Utilities & Miscellaneous 
+
+*/
+
+
+
+
 :root {
   --skyblue : #3875BB;
   --transblue : #3875bbe4;
@@ -81,19 +102,18 @@
 }
 
 
-html {
-  height: 100%;
+html, body {
+  min-height: 100%;
   margin: 0;
   padding: 0;
 }
 
 body {
   font-family: "Sen", sans-serif;
-  margin: 0;
-  padding: 1rem;
-  height : 100%;
-  color : var(--gold);
+  color: var(--gold);
   background-color: var(--munken);
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 h1,h2,h3,h4,h5,p,li,a,button {
@@ -114,8 +134,9 @@ a {
 }
 
 .site-container {
-  padding : 1rem;
-  border : solid 0.3rem var(--gold);
+  min-height : 96.5vh;
+  padding: 1rem;
+  border: solid 0.3rem var(--gold);
   box-sizing: border-box;
 }
 
@@ -399,15 +420,18 @@ textarea {
 
 @media (max-width: 576px) {
 
+  body {
+    padding: 0.5rem;
+  }
+
   .site-container {
-    padding : 0;
+    padding: 0.5rem;
   }
 
    #cookie-banner {
    width : 80%;
    left : 46% !important;
 }
-
   .note {
     width : 10vh;
   }
@@ -496,6 +520,8 @@ textarea {
         flex: 1 0 0;
         margin-bottom: 1.5rem;
     }
+
+  
 }
 
 
